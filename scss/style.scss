@@ -19,6 +19,12 @@
 @import "./blocks/chat-window";
 @import "./blocks/button";
 @import "./blocks/message";
+@import "./blocks/auth";
+@import "./blocks/loader";
+@import "./blocks/empty-chat";
+@import "./blocks/chat-link";
+@import "./blocks/og";
+@import "./blocks/chat-image";
 
 * {
   box-sizing: border-box;

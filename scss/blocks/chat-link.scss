@@ -1,0 +1,12 @@
+.b-chat-link {
+  margin-top: 20px;
+
+  .b-chat-link--content {
+    border-left: solid 3px $blue-light-background;
+    padding-left: 10px;
+  }
+
+  .b-chat-link--loader {
+    text-align: center;
+  }
+}

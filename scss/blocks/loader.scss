@@ -1,0 +1,10 @@
+.b-loader {
+  align-self: center;
+  .three-bounce {
+    display: inline-block;
+    
+    > div {
+      background: $blue-background;
+    }
+  }
+}

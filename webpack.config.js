@@ -24,6 +24,10 @@ module.exports = {
         test: /\.js|\.jsx$/,
         exclude: /node_modules/,
         loader: 'babel-loader?optional=runtime&stage=0'
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
       }
     ]
   },
