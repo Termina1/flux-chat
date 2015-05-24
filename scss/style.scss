@@ -1,3 +1,40 @@
-.test {
-  background: none;
+%clearfix {
+  &:before,
+  &:after {
+      content: " ";
+      display: table;
+  }
+
+  &:after {
+      clear: both;
+  }
+}
+
+
+@import "./color";
+@import "./blocks/container";
+@import "./blocks/chat-head";
+@import "./blocks/dialog";
+@import "./blocks/chat-container";
+@import "./blocks/chat-window";
+@import "./blocks/button";
+@import "./blocks/message";
+
+* {
+  box-sizing: border-box;
+}
+
+
+.clear {
+  clear: both;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  font-size: 11px;
+  font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
 }

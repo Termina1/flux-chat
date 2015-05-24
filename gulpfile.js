@@ -28,7 +28,7 @@ function onlydev(stream) {
 
 var buildDest = './build';
 var jsSrc = './js/**/*';
-var cssSrc = './scss/**/*.scss';
+var cssSrc = './scss/**/*';
 var index = './index.html';
 
 gulp.task('js', function() {
@@ -99,12 +99,14 @@ gulp.task('watch', function() {
     gulp.watch(cssSrc, ['scss']);
 });
 
-gulp.task('server', ['watch'], function() {
+gulp.task('server', function() {
     return gulp.src(buildDest)
         .pipe(webserver({
             directoryListing: true,
             open: true
         }));
 });
+
+gulp.task('watch-and-serve', ['server', 'watch']);
 
 gulp.task('default', runSeq(['scss', 'js', 'images'], 'index'))

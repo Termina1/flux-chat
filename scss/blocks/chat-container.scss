@@ -1,0 +1,32 @@
+.b-chat-container {
+  height: 100%;
+  padding: 70px 0 111px 0;
+
+  &--wrap {
+    position: absolute;
+    bottom: 111px;
+    width: 100%;
+    top: 70px;
+    overflow: auto;
+  }
+
+  &--wrap-inner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 100%;
+    padding: 10px 85px;
+
+    > .b-message {
+      flex-shrink: 0;
+    }
+  }
+
+  &--status {
+    margin-left: 47px;
+    color: $grey-type;
+    margin-top: 15px;
+    clear: both;
+  }
+}

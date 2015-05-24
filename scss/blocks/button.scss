@@ -1,0 +1,21 @@
+.b-button {
+  background: $blue-background;
+  padding: 6px 16px 7px 16px;
+  border: none;
+  outline: none;
+  color: white;
+  display: inline-block;
+  line-height: 13px;
+  transition: background-color 100ms ease-in-out;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: $blue-light-background;
+  }
+
+  &:active {
+    padding-top: 7px;
+    padding-bottom: 6px;
+    background: $blue-lighter-background;
+  }
+}

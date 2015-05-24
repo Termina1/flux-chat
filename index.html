@@ -24,6 +24,46 @@
         </script>
     </head>
     <body>
+        <div class="b-container">
+          <div class="b-chat-head">
+            <div class="b-chat-head--actions"></div>
+            <div class="b-chat-head--dialogs">
+              <div class="b-dialog">Беседа</div>
+            </div>
+          </div>
+          <div class="b-chat-container">
+            <div class="b-chat-container--wrap">
+              <div class="b-chat-container--wrap-inner">
+                <% for(var i = 0; i < 2; i++) { %>
+                <div class="b-message">
+                  <div class="b-message--photo">
+                    <img src="https://pp.vk.me/c412825/v412825216/5ed8/oen8E5j_dJc.jpg" />
+                  </div>
+                  <div class="b-message--info">
+                    <a class="b-message--name" href="#">Вячеслав</a>
+                    <div class="b-message--text">dsdsdsddsdsdsddsdsdsddsdsdsddsdsdsd dsdsdsddsdsdsddsdsdsddsdsdsddsdsdsddsdsdsd dsdsdsddsdsdsddsdsdsddsdsdsddsdsdsddsdsdsd</div>
+                  </div>
+                </div>
+                <% } %>
+                <div class="b-chat-container--status">Вячеслав набирает сообщение...</div>
+              </div>
+            </div>
+          </div>
+          <div class="b-chat-window">
+            <div class="b-chat-window--photo">
+              <img src="https://pp.vk.me/c412825/v412825216/5ed8/oen8E5j_dJc.jpg" />
+            </div>
+            <div class="b-chat-window--inputs">
+              <textarea placeholder="Введите Ваше сообщение..." class="b-chat-window--inputs-textarea"></textarea>
+              <div class="b-chat-window--send">
+                <button class="b-button">Отправить</button>
+              </div>
+            </div>
+            <div class="b-chat-window--photo">
+              <img src="https://pp.vk.me/c412825/v412825216/5ed8/oen8E5j_dJc.jpg" />
+            </div>
+          </div>
+        </div>
         <script src="/${manifest['main.js']}" async></script>
     </body>
 </html>

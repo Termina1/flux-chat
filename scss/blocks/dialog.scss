@@ -1,0 +1,16 @@
+.b-dialog {
+  color: white;
+  background: $blue-background;
+  padding: 3px 20px 4px 6px;
+  font-size: 11px;
+  display: inline-block;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+
+  &::after {
+    content: "x";
+    position: absolute;
+    right: 7px;
+  }
+}
