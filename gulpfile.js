@@ -77,7 +77,7 @@ gulp.task('index', function() {
         'main.js': 'main.js'
       }
     }
-    var data = {};
+    var data = { domain: 'localhost:3000' };
     data.manifest = man;
     return gulp.src('./index.html')
         .pipe(template(data))
@@ -94,7 +94,7 @@ gulp.task('watch', function() {
     });
 
     gulp.watch(jsSrc, ['js']);
-    gulp.watch([index, './data/*.js'], ['index']);
+    gulp.watch(index, ['index']);
     gulp.watch(['./img/**/*'], ['images']);
     gulp.watch(cssSrc, ['scss']);
 });
@@ -107,4 +107,4 @@ gulp.task('server', ['watch'], function() {
         }));
 });
 
-gulp.task('default', runSeq(['scss', 'js', 'images', 'svgicons'], 'index'))
+gulp.task('default', runSeq(['scss', 'js', 'images'], 'index'))
