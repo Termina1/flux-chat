@@ -6,26 +6,16 @@ export default class AuthStore extends Store {
     super();
 
     const auth = flux.getActionIds('auth');
-    this.register(auth.entered, this.setToken)
-    if(localStorage.getItem('auth')) {
-      this.state = JSON.parse(localStorage.getItem('auth'));
-    } else {
-      this.state = { authedId: null };
-    }
-
-    this.addListener('change', () => this.saveState());
+    this.registerAsync(auth.entered, undefined, this.setAuth)
+    this.state = { authedId: null };
   }
 
-  saveState() {
-    localStorage.setItem('auth', JSON.stringify(this.state));
-  }
-
-  setToken(token) {
+  setAuth(data) {
+    let {token, user} = data;
     this.setState({
       token,
-      authedId: 1
+      authedId: user.uid
     });
-    this.saveState();
   }
 
 }

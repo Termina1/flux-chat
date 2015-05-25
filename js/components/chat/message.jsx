@@ -9,14 +9,15 @@ export default class Message extends React.Component {
     if(this.props.message.link) {
       messageLink = <ChatLink link={this.props.message.link} />
     }
+    let user = this.props.user || {};
     return (
       <div className="b-message">
         <a href={profileLink} className="b-message--photo">
-          <img src="https://pp.vk.me/c412825/v412825216/5ed8/oen8E5j_dJc.jpg" />
+          <img src={user.photo_100} />
         </a>
         <div className="b-message--info">
-          <a className="b-message--name" href={profileLink}>Вячеслав</a>
-          <div className="b-message--text" dangerouslySetInnerHTML={{__html: this.props.message.text}}></div>
+          <a className="b-message--name" href={profileLink}>{user.first_name}</a>
+          <div className="b-message--text" dangerouslySetInnerHTML={{__html: this.props.message.textParsed}}></div>
         </div>
         {messageLink}
       </div>

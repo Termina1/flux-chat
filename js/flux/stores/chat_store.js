@@ -2,15 +2,17 @@ import {Store} from "flummox";
 
 export default class ChatStore extends Store {
 
-  constructor(flux) {
+  constructor(flux, connector) {
     super();
+
+    this.connector = connector;
 
     const chat = flux.getActionIds('chat');
     this.registerAsync(chat.startedChat,
         this.startChat, this.addMessages, this.failed);
 
     this.register(chat.sentMessage, this.addMessages);
-
+    this.flux = flux;
     this.registerAsync(chat.followed, false, this.embedLink);
     this.state = { chats: {}, currentChat: null };
   }
@@ -24,19 +26,33 @@ export default class ChatStore extends Store {
     }
   }
 
-  failed({params, error}) {
-    this.setState({
-      currentChat: params.userId,
-      chats: {
-        [params.userId]: {
-          loading: false,
-          messages: this.state.chats[params.userId].messages
+  failed(errors) {
+  }
+
+  updateChatStatus(u) {}
+
+  fromPoll(type, u) {
+    switch(type) {
+      case 'status':
+        this.updateChatStatus(u);
+        break;
+
+      case 'message':
+        if(u.userId === this.state.currentChat) {
+          this.addMessages(u);
         }
-      }
-    });
+        break;
+    }
+  }
+
+  connectToServer(token) {
+    if(!this.connector.isConnected()) {
+      this.connector.connect(token, this.flux, this.fromPoll.bind(this));
+    }
   }
 
   startChat(args) {
+    this.connectToServer(args.actionArgs[0].token);
     let userId = args.actionArgs[0].userId;
     this.setState({
       currentChat: userId,

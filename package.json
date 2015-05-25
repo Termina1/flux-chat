@@ -36,6 +36,7 @@
     "webpack-manifest-plugin": "git+ssh://git@github.com:Termina1/webpack-manifest-plugin.git#emit-manifest"
   },
   "dependencies": {
+    "babel": "^5.4.7",
     "babel-runtime": "^5.4.7",
     "escape-html": "^1.0.1",
     "flummox": "^4.0.0-alpha2",

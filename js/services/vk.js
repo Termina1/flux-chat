@@ -3,7 +3,23 @@ import $ from "jsonp";
 
 export default class VKAuth {
   auth() {
-    window.open(`${VK_LINK}?client_id=${APP_ID}&scope=${SCOPE}&redirect_uri=https://oauth.vk.com/blank.html&display=popup&v=5.33&response_type=token`);
+    window.open(`${VK_AUTH_LINK}?client_id=${APP_ID}&scope=${SCOPE}&redirect_uri=https://oauth.vk.com/blank.html&display=popup&v=5.33&response_type=token`);
+  }
+
+  getUser(token, id) {
+    let params = {fields: 'photo_100'};
+    if(id) {
+      params.user_id = id;
+    }
+    return this.api("users.get", token, params);
+  }
+
+  sendMessage(token, message, reciever) {
+    return this.api("messages.send", token, {
+      user_id: reciever,
+      message: message.text,
+      guid: message.id,
+    });
   }
 
   api(method, accessToken, params = {}) {
@@ -20,7 +36,7 @@ export default class VKAuth {
             params: params
           });
         } else {
-          ref(resp);
+          ref(resp.response);
         }
       });
     });

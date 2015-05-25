@@ -2,15 +2,29 @@ import {Actions} from "flummox";
 
 export default class ChatActions extends Actions {
 
-  constructor(service, follower) {
+  constructor(service, follower, parser) {
     super();
     this.service = service;
     this.follower = follower;
+    this.parser = parser;
+  }
+
+  processVkMessages(messages) {
+    return messages.slice(1)
+      .map(el => ({ textParsed: this.parser.parseLinks(el.body).textParsed,
+        text: el.body,
+        from: el.from_id, id: el.mid, out: el.out }))
+      .reverse();
   }
 
   async startedChat({token, userId}) {
-    let history = await this.service.api('messages.getHistory', token, {userId});
-    return { userId, history };
+    let messagesPromise = this.service.api('messages.getHistory', token,
+      { user_id: userId });
+    let companionPromise = this.service.getUser(token, userId);
+    let [messages, companion] = await Promise.all([messagesPromise, companionPromise]);
+    let user = companion[0];
+    messages = this.processVkMessages(messages);
+    return { userId, messages, user };
   }
 
   async followed(link, id) {
@@ -18,7 +32,8 @@ export default class ChatActions extends Actions {
     return {link, result, id};
   }
 
-  sentMessage(message, userId) {
+  sentMessage(token, message, userId) {
+    this.service.sendMessage(token, message, userId);
     return {userId, messages: [message] };
   }
 

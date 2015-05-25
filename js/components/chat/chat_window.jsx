@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "../button";
-import uuid from "uuid";
 
 export default class ChatWindow extends React.Component {
 
@@ -12,15 +11,16 @@ export default class ChatWindow extends React.Component {
     let node = this.refs.message.getDOMNode();
     let text = node.value;
     if(text) {
-      let id = uuid.v1();
+      let id = Date.now() + Math.round(Math.random() * 100);
       let chat = this.context.flux.getActions('chat');
       let {link, textParsed} = this.props.parser.parseLinks(text);
-      chat.sentMessage({
+      chat.sentMessage(this.props.token, {
           id,
           link: link,
-          text: textParsed,
+          text,
+          textParsed,
           from: this.props.user,
-          to: this.props.companion
+          out: 1
         }, this.props.companion);
       if(link) {
         chat.followed(link, id);
