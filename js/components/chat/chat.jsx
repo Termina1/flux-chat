@@ -72,6 +72,10 @@ export default class Chat extends React.Component {
     } else {
       content = <Loader />;
     }
+    let top;
+    if(chat && chat.loadingTop) {
+      top = <Loader />;
+    }
     return (
       <div>
         <div className="b-chat-head">
@@ -83,6 +87,7 @@ export default class Chat extends React.Component {
         <div className="b-chat-container">
           <div className="b-chat-container--wrap" ref="window" onScroll={throttle(this.checkForLoad.bind(this), 200)}>
             <div className="b-chat-container--wrap-inner">
+              {top}
               {content}
               <Status chat={chat} />
             </div>
