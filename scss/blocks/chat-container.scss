@@ -18,6 +18,15 @@
     min-height: 100%;
     padding: 10px 85px;
 
+    a {
+      color: $blue-type;
+      text-decoration: none;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+
     > .b-message {
       flex-shrink: 0;
     }

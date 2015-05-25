@@ -1,7 +1,8 @@
 import React from "react";
 import Loader from "./loader";
 import OG from "./og";
-import Dropbox from "./dropbox";
+import ChatImage from "./chat_image";
+import ChatEmbed from "./chat_embed";
 
 export default class ChatLink extends React.Component {
 
@@ -17,8 +18,13 @@ export default class ChatLink extends React.Component {
     } else {
       switch(this.props.link.type) {
         case "dropbox.com":
-          Component = Dropbox;
+        case "instagram.com":
+          Component = ChatImage;
           break
+        case "youtube.com":
+          Component = ChatEmbed;
+          break;
+
         default:
           Component = OG;
           break

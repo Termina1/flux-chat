@@ -1,11 +1,9 @@
 import React from "react";
 import Button from "../button";
+import {flux} from "../../decorators";
 
+@flux('user')
 export default class ChatWindow extends React.Component {
-
-  static contextTypes = {
-    flux: React.PropTypes.object
-  }
 
   sendMessage() {
     let node = this.refs.message.getDOMNode();
@@ -35,11 +33,24 @@ export default class ChatWindow extends React.Component {
     }
   }
 
+  getImage(id) {
+    if(!this.state.users[id]) {
+      return "";
+    }
+    return this.state.users[id].photo_100;
+  }
+
+  getLink(id) {
+    return `https://vk.com/id${id}`;
+  }
+
   render() {
     return (
       <div className="b-chat-window">
         <div className="b-chat-window--photo">
-          <img src="https://pp.vk.me/c412825/v412825216/5ed8/oen8E5j_dJc.jpg" />
+          <a target="_blank" href={this.getLink(this.props.user)}>
+            <img src={this.getImage(this.props.user)} />
+          </a>
         </div>
         <div className="b-chat-window--inputs">
           <textarea onKeyDown={this.checkKey.bind(this)}
@@ -50,7 +61,9 @@ export default class ChatWindow extends React.Component {
           </div>
         </div>
         <div className="b-chat-window--photo">
-          <img src="https://pp.vk.me/c412825/v412825216/5ed8/oen8E5j_dJc.jpg" />
+          <a target="_blank" href={this.getLink(this.props.companion)}>
+            <img src={this.getImage(this.props.companion)} />
+          </a>
         </div>
       </div>
     );

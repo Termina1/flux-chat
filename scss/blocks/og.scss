@@ -18,5 +18,10 @@
   &--title {
     color: $blue-type;
     font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
