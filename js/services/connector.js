@@ -18,7 +18,7 @@ export default class Connector {
   }
 
   addMessageFromPoll(u) {
-    let [s, id, flags, fromId, time, su, text, attach] = u;
+    let [s, id, flags, fromId, date, su, text, attach] = u;
     if(!(flags & 2)) {
       let {link, textParsed} = this.parser.parseLinks(text);
       if(link) {
@@ -27,6 +27,7 @@ export default class Connector {
       let message = {
         text,
         textParsed,
+        date,
         id,
         link: link,
         from: fromId,

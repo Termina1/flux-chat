@@ -1,4 +1,4 @@
-import {VK_AUTH_LINK, VK_LINK, APP_ID, SCOPE} from "../constants";
+import {VK_AUTH_LINK, VK_LINK, APP_ID, SCOPE, MESSAGES_TO_LOAD} from "../constants";
 import $ from "jsonp";
 
 export default class VKAuth {
@@ -12,6 +12,15 @@ export default class VKAuth {
       params.user_id = id;
     }
     return this.api("users.get", token, params);
+  }
+
+  loadMoreMessages(token, id, userId) {
+    return this.api("messages.getHistory", token, {
+      start_message_id: id,
+      user_id: userId,
+      offset: -MESSAGES_TO_LOAD - 1,
+      count: MESSAGES_TO_LOAD
+    });
   }
 
   sendMessage(token, message, reciever) {

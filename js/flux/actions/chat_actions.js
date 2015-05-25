@@ -13,8 +13,19 @@ export default class ChatActions extends Actions {
     return messages.slice(1)
       .map(el => ({ textParsed: this.parser.parseLinks(el.body).textParsed,
         text: el.body,
-        from: el.from_id, id: el.mid, out: el.out }))
-      .reverse();
+        from: el.from_id,
+        date: el.date,
+        id: el.mid,
+        out: el.out
+      })).reverse();
+  }
+
+  async loadHistory(chat, userId, token) {
+    let messages = await this.service
+      .loadMoreMessages(token, chat.messages[0].id, userId);
+    messages = this.processVkMessages(messages);
+    return {userId, messages};
+
   }
 
   async startedChat({token, userId}) {

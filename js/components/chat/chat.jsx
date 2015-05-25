@@ -6,6 +6,9 @@ import EmptyChat from "./empty_chat";
 import Message from "./message";
 import Status from "./status";
 import ChatWindow from "./chat_window";
+import throttle from "lodash.throttle";
+
+const HEIGHT_TO_GO_BOTTOM = 100;
 
 @flux({
   chat(store) {
@@ -17,9 +20,30 @@ import ChatWindow from "./chat_window";
 })
 export default class Chat extends React.Component {
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     let node = this.refs.window.getDOMNode();
-    node.scrollTop = node.scrollHeight;
+    let height = node.getBoundingClientRect().height;
+    if(node.scrollTop + height + HEIGHT_TO_GO_BOTTOM > node.scrollHeight) {
+      node.scrollTop = node.scrollHeight;
+    } else {
+      let pscroll = this.prevScroll || 0;
+      node.scrollTop = node.scrollHeight - pscroll;
+    }
+  }
+
+  getMessagesModels() {
+    return this.state.chat.chats[this.state.chat.currentChat].messages;
+  }
+
+  checkForLoad(ev) {
+    let node = this.refs.window.getDOMNode();
+    this.prevScroll = node.scrollHeight - node.scrollTop;
+    if(node.scrollTop < 100 && !this.context.flux.dispatcher.isDispatching()) {
+      this.prevScroll = node.scrollHeight;
+      this.context.flux.getActions('chat')
+        .loadHistory(this.state.chat.chats[this.state.chat.currentChat],
+          this.state.chat.currentChat, this.props.token);
+    }
   }
 
   componentDidMount() {
@@ -35,7 +59,7 @@ export default class Chat extends React.Component {
       return <EmptyChat />;
     }
     return chat.messages.map(el => {
-      return <Message key={el.id} user={this.state.users[el.from]} message={el} />
+      return <Message key={el.id} user={this.state.users[el.from]} message={el} />;
     });
   }
 
@@ -57,7 +81,7 @@ export default class Chat extends React.Component {
           </div>
         </div>
         <div className="b-chat-container">
-          <div className="b-chat-container--wrap" ref="window">
+          <div className="b-chat-container--wrap" ref="window" onScroll={throttle(this.checkForLoad.bind(this), 200)}>
             <div className="b-chat-container--wrap-inner">
               {content}
               <Status chat={chat} />

@@ -14,7 +14,22 @@ export default class ChatStore extends Store {
     this.register(chat.sentMessage, this.addMessages);
     this.flux = flux;
     this.registerAsync(chat.followed, false, this.embedLink);
+    this.registerAsync(chat.loadHistory, this.loadingOnTop, this.addPrevMessages);
+
     this.state = { chats: {}, currentChat: null };
+  }
+
+  addPrevMessages({messages, userId}) {
+    this.state.chats[userId] = {
+      messages: messages.concat(this.state.chats[userId].messages)
+    };
+    this.emit('change');
+  }
+
+  loadingOnTop(action) {
+    let userId = action.actionArgs[1];
+    this.state.chats[userId].loadingTop = true;
+    this.emit('change');
   }
 
   embedLink({id, result}) {

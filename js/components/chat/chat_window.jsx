@@ -17,6 +17,7 @@ export default class ChatWindow extends React.Component {
           link: link,
           text,
           textParsed,
+          date: Math.round(Date.now()/1000),
           from: this.props.user,
           out: 1
         }, this.props.companion);
