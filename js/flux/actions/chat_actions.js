@@ -20,6 +20,14 @@ export default class ChatActions extends Actions {
       })).reverse();
   }
 
+  startedTyping(userId, token) {
+    this.service.api('messages.setActivity', token, {
+      user_id: userId,
+      type: "typing"
+    });
+    return userId;
+  }
+
   async loadHistory(chat, userId, token) {
     let messages = await this.service
       .loadMoreMessages(token, chat.messages[0].id, userId);

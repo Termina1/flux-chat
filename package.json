@@ -38,6 +38,7 @@
   "dependencies": {
     "babel": "^5.4.7",
     "babel-runtime": "^5.4.7",
+    "classnames": "^2.1.1",
     "escape-html": "^1.0.1",
     "flummox": "^4.0.0-alpha2",
     "jsonp": "^0.2.0",
@@ -45,6 +46,7 @@
     "react": "^0.13.3",
     "react-mixin": "^1.2.3",
     "react-spinkit": "^1.0.2",
-    "uuid": "^2.0.1"
+    "uuid": "^2.0.1",
+    "whatwg-fetch": "^0.8.2"
   }
 }

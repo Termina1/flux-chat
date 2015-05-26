@@ -44,7 +44,19 @@ export default class ChatStore extends Store {
   failed(errors) {
   }
 
-  updateChatStatus(u) {}
+  clearStatus(id) {
+    this.state.chats[id].status = undefined;
+    this.emit('change');
+  }
+
+  updateChatStatus(u) {
+    this.state.chats[u[1]].status = u[1];
+    this.emit('change');
+    if(this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    this.timeout = setTimeout(this.clearStatus.bind(this, u[1]), 5000);
+  }
 
   fromPoll(type, u) {
     switch(type) {

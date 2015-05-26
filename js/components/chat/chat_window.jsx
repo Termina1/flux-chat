@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../button";
 import {flux} from "../../decorators";
+import throttle from "lodash.throttle";
 
 @flux('user')
 export default class ChatWindow extends React.Component {
@@ -45,6 +46,11 @@ export default class ChatWindow extends React.Component {
     return `https://vk.com/id${id}`;
   }
 
+  sendStatusUpdate() {
+    this.context.flux.getActions('chat')
+      .startedTyping(this.props.companion, this.props.token);
+  }
+
   render() {
     return (
       <div className="b-chat-window">
@@ -54,7 +60,7 @@ export default class ChatWindow extends React.Component {
           </a>
         </div>
         <div className="b-chat-window--inputs">
-          <textarea onKeyDown={this.checkKey.bind(this)}
+          <textarea onKeyPress={throttle(this.sendStatusUpdate.bind(this), 9000)} onKeyDown={this.checkKey.bind(this)}
             ref="message" placeholder="Введите Ваше сообщение..."
              className="b-chat-window--inputs-textarea"></textarea>
           <div className="b-chat-window--send">

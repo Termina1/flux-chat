@@ -39,4 +39,8 @@
     clear: both;
     visibility: hidden;
   }
+
+  &--status.b-chat-container--status_visible {
+    visibility: visible;
+  }
 }

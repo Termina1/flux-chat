@@ -89,7 +89,7 @@ export default class Chat extends React.Component {
             <div className="b-chat-container--wrap-inner">
               {top}
               {content}
-              <Status chat={chat} />
+              <Status chat={chat} users={this.state.users} />
             </div>
           </div>
         </div>

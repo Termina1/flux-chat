@@ -1,5 +1,6 @@
 import React from "react";
 import {} from "babel/polyfill";
+import {} from "whatwg-fetch";
 
 import Start from "./components/start";
 import VKAuth from "./services/vk";
