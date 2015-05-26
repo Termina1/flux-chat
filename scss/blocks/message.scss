@@ -13,6 +13,11 @@
     }
   }
 
+  &--date {
+    color: $grey-type;
+    float: right;
+  }
+
   &--info {
     margin-left: 47px;
     line-height: 1.5em;

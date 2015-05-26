@@ -60,7 +60,9 @@ export default class ChatWindow extends React.Component {
           </a>
         </div>
         <div className="b-chat-window--inputs">
-          <textarea onKeyPress={throttle(this.sendStatusUpdate.bind(this), 9000)} onKeyDown={this.checkKey.bind(this)}
+          <textarea onKeyPress={throttle(this.sendStatusUpdate.bind(this), 9000, {
+            trailing: false
+          })} onKeyDown={this.checkKey.bind(this)}
             ref="message" placeholder="Введите Ваше сообщение..."
              className="b-chat-window--inputs-textarea"></textarea>
           <div className="b-chat-window--send">
