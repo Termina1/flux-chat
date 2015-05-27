@@ -11,8 +11,10 @@ export default class Connector {
     this.callback = callback;
     this.chatId = chatId;
     this.flux = flux;
-    return this.service.api("messages.getLongPollServer", token)
-      .then(({server, key, ts}) => {
+    return fetch(`${SERVER}/poll?token=${token}`)
+      .then(r => r.json())
+      .then((t) => {
+        let {server, key, ts} = t.response;
         let url = `http://${server}?act=a_check&key=${key}&wait=25&mode=2&ts=`;
         this.startLoop(url, ts)
       });
@@ -40,7 +42,6 @@ export default class Connector {
 
 
   streamFromPoll({updates}) {
-    console.log(updates);
     let relevant = updates.filter(u => [4, 61, 0, 2].includes(u[0])).forEach(u => {
       switch(u[0]) {
         case 61:

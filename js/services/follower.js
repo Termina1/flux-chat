@@ -7,5 +7,4 @@ export default class Follower {
       .then(resp => resp.json());
   }
 
-
 }
