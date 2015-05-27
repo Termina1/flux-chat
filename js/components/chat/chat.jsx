@@ -27,6 +27,7 @@ export default class Chat extends React.Component {
   applyPosition() {
     let node = this.refs.window.getDOMNode();
     let height = node.getBoundingClientRect().height;
+    console.log(this.prevScroll);
     if(node.scrollTop + height + HEIGHT_TO_GO_BOTTOM > node.scrollHeight) {
       node.scrollTop = node.scrollHeight;
     } else {
@@ -40,6 +41,7 @@ export default class Chat extends React.Component {
   }
 
   checkForLoad(ev) {
+    // tracking scroll position, if reaching top — start loading
     let chat = this.state.chat.chats[this.state.chat.currentChat];
     if(chat.all) {
       return;
@@ -55,6 +57,7 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
+    // this would be placed somwhere in routing, if there were multiple routes
     let actions = this.context.flux.getActions('chat');
     let id = ALLOWED_IDS.filter(el => el !== this.props.user)[0];
     setTimeout(() => {

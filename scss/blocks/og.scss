@@ -2,8 +2,6 @@
   @extend %clearfix;
 
   &--photo {
-    float: left;
-    width: 50px;
     display: block;
 
     img {
@@ -11,8 +9,8 @@
     }
   }
   &--info {
-    margin-left: 60px;
     line-height: 1.5em;
+    margin-top: 10px;
   }
 
   &--title {

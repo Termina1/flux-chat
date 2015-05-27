@@ -31,6 +31,7 @@ export default class ChatImage extends React.Component {
 
   loaded(e) {
     this.setState({loaded: true});
+    console.log('updating');
     this.props.onUpdate();
   }
 

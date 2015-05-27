@@ -50,11 +50,12 @@ export default class ChatStore extends Store {
 
   embedLink({id, result}) {
     let chat = this.state.currentChat;
-    let message = this.state.chats[chat].messages.filter(el => el.id === id);
-    if(message) {
-      message[0].link = result;
-      this.emit('change');
-    }
+    let message = this.state.chats[chat].messages
+      .filter(el => el.id === id)
+      .forEach(m => {
+        m.link = result;
+      });
+    this.emit('change');
   }
 
   failed(errors) {

@@ -7,6 +7,7 @@ export default class ChatActions extends Actions {
     this.service = service;
     this.follower = follower;
     this.parser = parser;
+    this.parsedLinks = {};
   }
 
   processVkMessages(messages) {
@@ -52,6 +53,11 @@ export default class ChatActions extends Actions {
   }
 
   async followed(link, id) {
+    // to prevent following link that was already followed in optimistic update
+    if(this.parsedLinks[id]) {
+      return {link, id: -1};
+    }
+    this.parsedLinks[id] = link;
     let result = await this.follower.follow(link);
     return {link, result, id};
   }
