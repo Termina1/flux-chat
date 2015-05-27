@@ -51,7 +51,7 @@ gulp.task('scss', function() {
             }
         }))
         .pipe(scss())
-        .pipe(postcss([autoprefixer()]))
+        .pipe(postcss([autoprefixer({ browsers: ['last 2 version'] })]))
         .pipe(concat('style.css'))
         .pipe(onlyprod(csso))
         .pipe(onlyprod(rev))
