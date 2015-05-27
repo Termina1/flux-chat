@@ -13,7 +13,8 @@ export default class ChatWindow extends React.Component {
       let id = Date.now() + Math.round(Math.random() * 100);
       let chat = this.context.flux.getActions('chat');
       let {link, textParsed} = this.props.parser.parseLinks(text);
-      chat.sentMessage(this.props.token, {
+      let result = chat.sentMessage(this.props.token, {
+          tid: id,
           id,
           link: link,
           text,
@@ -22,9 +23,12 @@ export default class ChatWindow extends React.Component {
           from: this.props.user,
           out: 1
         }, this.props.companion);
-      if(link) {
-        chat.followed(link, id);
-      }
+      result.p.then((rid) => {
+        chat.hadRealId(id, rid, this.props.companion);
+        if(link) {
+          chat.followed(link, rid);
+        }
+      });
     }
     node.value = "";
   }

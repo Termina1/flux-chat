@@ -37,6 +37,10 @@ export default class ChatActions extends Actions {
 
   }
 
+  hadRealId(id, rid, userId) {
+    return {id, rid, userId};
+  }
+
   async startedChat({token, userId}) {
     let messagesPromise = this.service.api('messages.getHistory', token,
       { user_id: userId });
@@ -53,8 +57,8 @@ export default class ChatActions extends Actions {
   }
 
   sentMessage(token, message, userId) {
-    this.service.sendMessage(token, message, userId);
-    return {userId, messages: [message] };
+    let p = this.service.sendMessage(token, message, userId);
+    return {userId, messages: [message], p };
   }
 
 }

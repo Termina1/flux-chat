@@ -20,22 +20,22 @@ export default class Connector {
 
   addMessageFromPoll(u) {
     let [s, id, flags, fromId, date, su, text, attach] = u;
-    if(!(flags & 2)) {
-      let {link, textParsed} = this.parser.parseLinks(text);
-      if(link) {
-        this.flux.getActions('chat').followed(link, id);
-      }
-      let message = {
-        text,
-        textParsed,
-        date,
-        id,
-        link: link,
-        from: fromId,
-        out: 0
-      }
-      this.callback('message', {userId: fromId, messages: [message]});
+    let {link, textParsed} = this.parser.parseLinks(text);
+    if(link) {
+      this.flux.getActions('chat').followed(link, id);
     }
+    let me = this.flux.getStore('auth').state.authedId;
+    fromId = (flags & 2) ? me : fromId;
+    let message = {
+      text,
+      textParsed,
+      date,
+      id,
+      link: link,
+      from: fromId,
+      out: flags & 2
+    }
+    this.callback('message', {userId: this.chatId, message});
   }
 
 
@@ -43,7 +43,9 @@ export default class Connector {
     let relevant = updates.filter(u => [4, 61].includes(u[0])).forEach(u => {
       switch(u[0]) {
         case 61:
-          this.callback('status', u)
+          if(u[1] === this.chatId) {
+            this.callback('status', u);
+          }
           break;
 
         case 4:

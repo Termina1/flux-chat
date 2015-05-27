@@ -1,4 +1,5 @@
 import {Store} from "flummox";
+import assign from "object-assign";
 
 export default class ChatStore extends Store {
 
@@ -12,11 +13,20 @@ export default class ChatStore extends Store {
         this.startChat, this.addMessages, this.failed);
 
     this.register(chat.sentMessage, this.addMessages);
+    this.register(chat.hadRealId, this.updateId);
     this.flux = flux;
     this.registerAsync(chat.followed, false, this.embedLink);
     this.registerAsync(chat.loadHistory, this.loadingOnTop, this.addPrevMessages);
 
     this.state = { chats: {}, currentChat: null };
+  }
+
+  updateId({id, rid, userId}) {
+    let chat = this.state.chats[userId];
+    chat.messages.filter(el => el.tid === id).forEach(el => {
+      el.id = rid;
+    });
+    this.emit('change');
   }
 
   addPrevMessages({messages, userId}) {
@@ -64,6 +74,19 @@ export default class ChatStore extends Store {
     this.timeout = setTimeout(this.clearStatus.bind(this, u[1]), 5000);
   }
 
+  updateMessage(u) {
+    let m = this.state.chats[u.userId].messages
+      .filter(m => m.id === u.message.id);
+    if(m.length > 0) {
+      m.forEach(m => {
+        assign(m, u.message);
+      });
+    } else {
+      this.addMessages({userId: u.userId, messages: [u.message]});
+    }
+    this.emit('change');
+  }
+
   fromPoll(type, u) {
     switch(type) {
       case 'status':
@@ -71,24 +94,22 @@ export default class ChatStore extends Store {
         break;
 
       case 'message':
-        if(u.userId === this.state.currentChat) {
-          this.addMessages(u);
-        }
+        this.updateMessage(u);
         break;
     }
   }
 
-  connectToServer(token) {
+  connectToServer(token, chat) {
     if(!this.connector.isConnected()) {
       this.connector.connect(token, this.flux,
-        this.state.currentChat,
+        chat,
         this.fromPoll.bind(this));
     }
   }
 
   startChat(args) {
-    this.connectToServer(args.actionArgs[0].token);
     let userId = args.actionArgs[0].userId;
+    this.connectToServer(args.actionArgs[0].token, userId);
     this.setState({
       currentChat: userId,
       chats: {

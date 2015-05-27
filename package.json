@@ -43,6 +43,7 @@
     "flummox": "^4.0.0-alpha2",
     "jsonp": "^0.2.0",
     "lodash.throttle": "^3.0.3",
+    "object-assign": "^2.0.0",
     "react": "^0.13.3",
     "react-mixin": "^1.2.3",
     "react-spinkit": "^1.0.2",
