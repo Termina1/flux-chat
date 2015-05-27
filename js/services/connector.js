@@ -7,8 +7,9 @@ export default class Connector {
     this.parser = parser;
   }
 
-  connect(token, flux, callback) {
+  connect(token, flux, chatId, callback) {
     this.callback = callback;
+    this.chatId = chatId;
     this.flux = flux;
     return this.service.api("messages.getLongPollServer", token)
       .then(({server, key, ts}) => {
@@ -46,7 +47,9 @@ export default class Connector {
           break;
 
         case 4:
-          this.addMessageFromPoll(u);
+          if(u[3] === this.chatId) {
+            this.addMessageFromPoll(u);
+          }
           break;
       }
     });

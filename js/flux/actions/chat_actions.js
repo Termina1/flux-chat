@@ -15,6 +15,7 @@ export default class ChatActions extends Actions {
         text: el.body,
         from: el.from_id,
         date: el.date,
+        attachments: el.attachments,
         id: el.id,
         out: el.out
       })).reverse();

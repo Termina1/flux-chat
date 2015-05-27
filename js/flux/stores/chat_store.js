@@ -80,7 +80,9 @@ export default class ChatStore extends Store {
 
   connectToServer(token) {
     if(!this.connector.isConnected()) {
-      this.connector.connect(token, this.flux, this.fromPoll.bind(this));
+      this.connector.connect(token, this.flux,
+        this.state.currentChat,
+        this.fromPoll.bind(this));
     }
   }
 

@@ -29,7 +29,7 @@ export default class ChatLink extends React.Component {
           Component = OG;
           break
       }
-      cnt = <div className="b-chat-link--content"><Component params={this.props.link}/></div>;
+      cnt = <div className="b-chat-link--content"><Component onUpdate={this.props.onUpdate} params={this.props.link}/></div>;
 
     }
     return (

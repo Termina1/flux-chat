@@ -1,4 +1,11 @@
 .b-chat-image {
+  margin-top: 10px;
+
+  &--description {
+    color: $blue-type;
+    font-weight: bold;
+  }
+
   img {
     max-width: 100%;
     max-height: 100%;

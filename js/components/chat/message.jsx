@@ -1,5 +1,6 @@
 import React from "react";
 import ChatLink from "./chat_link";
+import ChatImage from "./chat_image";
 
 function z(num) {
   if(num < 10) {
@@ -31,9 +32,26 @@ export default class Message extends React.Component {
 
   render() {
     let profileLink = `https://vk.com/id${this.props.message.from}`;
-    let messageLink;
+    let messageLink, items;
     if(this.props.message.link) {
-      messageLink = <ChatLink link={this.props.message.link} />
+      messageLink = <ChatLink link={this.props.message.link} onUpdate={this.props.onUpdate} />
+    }
+    if(this.props.message.attachments) {
+      items = this.props.message.attachments.map(at => {
+        switch(at.type) {
+          case "photo":
+            return <ChatImage params={{
+              image: at[at.type].photo_604,
+            }} onUpdate={this.props.onUpdate}/>;
+          case "video":
+            return <ChatImage params={{
+              image: at[at.type].photo_800,
+              description: at[at.type].title
+            }} onUpdate={this.props.onUpdate}/>;
+          default:
+            return <div></div>;
+        }
+      });
     }
     let user = this.props.user || {};
     return (
@@ -45,6 +63,7 @@ export default class Message extends React.Component {
           <div className="b-message--date">{this.getDate()}</div>
           <a className="b-message--name" href={profileLink}>{user.first_name}</a>
           <div className="b-message--text" dangerouslySetInnerHTML={{__html: this.props.message.textParsed}}></div>
+          {items}
         </div>
         {messageLink}
       </div>

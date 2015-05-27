@@ -21,6 +21,10 @@ const HEIGHT_TO_GO_BOTTOM = 100;
 export default class Chat extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
+    this.applyPosition();
+  }
+
+  applyPosition() {
     let node = this.refs.window.getDOMNode();
     let height = node.getBoundingClientRect().height;
     if(node.scrollTop + height + HEIGHT_TO_GO_BOTTOM > node.scrollHeight) {
@@ -63,7 +67,8 @@ export default class Chat extends React.Component {
       return <EmptyChat />;
     }
     return chat.messages.map(el => {
-      return <Message key={el.id} user={this.state.users[el.from]} message={el} />;
+      return <Message key={el.id} onUpdate={this.applyPosition.bind(this)}
+        user={this.state.users[el.from]} message={el} />;
     });
   }
 
