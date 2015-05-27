@@ -10,12 +10,12 @@ export default class ChatActions extends Actions {
   }
 
   processVkMessages(messages) {
-    return messages.slice(1)
+    return messages.items
       .map(el => ({ textParsed: this.parser.parseLinks(el.body).textParsed,
         text: el.body,
         from: el.from_id,
         date: el.date,
-        id: el.mid,
+        id: el.id,
         out: el.out
       })).reverse();
   }

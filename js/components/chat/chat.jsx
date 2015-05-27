@@ -36,12 +36,16 @@ export default class Chat extends React.Component {
   }
 
   checkForLoad(ev) {
+    let chat = this.state.chat.chats[this.state.chat.currentChat];
+    if(chat.all) {
+      return;
+    }
     let node = this.refs.window.getDOMNode();
     this.prevScroll = node.scrollHeight - node.scrollTop;
     if(node.scrollTop < 100 && !this.context.flux.dispatcher.isDispatching()) {
       this.prevScroll = node.scrollHeight;
       this.context.flux.getActions('chat')
-        .loadHistory(this.state.chat.chats[this.state.chat.currentChat],
+        .loadHistory(chat,
           this.state.chat.currentChat, this.props.token);
     }
   }
@@ -85,7 +89,10 @@ export default class Chat extends React.Component {
           </div>
         </div>
         <div className="b-chat-container">
-          <div className="b-chat-container--wrap" ref="window" onScroll={throttle(this.checkForLoad.bind(this), 200)}>
+          <div className="b-chat-container--wrap" ref="window" onScroll={throttle(this.checkForLoad.bind(this), 200, {
+            leading: false,
+            trailing: true
+          })}>
             <div className="b-chat-container--wrap-inner">
               {top}
               {content}

@@ -20,9 +20,15 @@ export default class ChatStore extends Store {
   }
 
   addPrevMessages({messages, userId}) {
-    this.state.chats[userId] = {
-      messages: messages.concat(this.state.chats[userId].messages)
-    };
+    let chat = this.state.chats[userId];
+    if(messages.length === 0) {
+      chat.all = true;
+      chat.loadingTop = false;
+    } else {
+      this.state.chats[userId] = {
+        messages: messages.concat(this.state.chats[userId].messages)
+      };
+    }
     this.emit('change');
   }
 

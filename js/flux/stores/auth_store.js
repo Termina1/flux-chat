@@ -14,7 +14,7 @@ export default class AuthStore extends Store {
     let {token, user} = data;
     this.setState({
       token,
-      authedId: user.uid
+      authedId: user.id
     });
   }
 

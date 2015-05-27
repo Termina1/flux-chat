@@ -14,7 +14,7 @@ export default class UserStore extends Store {
   }
 
   addUser({user}) {
-    this.state.users[user.uid] = user;
+    this.state.users[user.id] = user;
     this.emit('change');
   }
 

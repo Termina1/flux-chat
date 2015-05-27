@@ -1,4 +1,4 @@
-import {VK_AUTH_LINK, VK_LINK, APP_ID, SCOPE, MESSAGES_TO_LOAD} from "../constants";
+import {VK_AUTH_LINK, VK_LINK, APP_ID, SCOPE, MESSAGES_TO_LOAD, VERSION} from "../constants";
 import $ from "jsonp";
 
 export default class VKAuth {
@@ -18,8 +18,11 @@ export default class VKAuth {
     return this.api("messages.getHistory", token, {
       start_message_id: id,
       user_id: userId,
-      offset: -MESSAGES_TO_LOAD - 1,
+      offset: 0,
       count: MESSAGES_TO_LOAD
+    }).then((resp) => {
+      resp.items = resp.items.slice(1);
+      return resp;
     });
   }
 
@@ -33,6 +36,7 @@ export default class VKAuth {
 
   api(method, accessToken, params = {}) {
     params.access_token = accessToken;
+    params.v = VERSION;
     let lparams = Object.keys(params)
       .map(el => `${el}=${params[el]}`)
       .join('&');
