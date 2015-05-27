@@ -16,11 +16,12 @@ let follower = new Follower();
 let parser = new LinkParser();
 let connector = new Connector(service, parser);
 let app = new App(service, follower, connector, parser);
-let replayer = new Replayer(app, { auth: ['entered'] });
-replayer.replay('auth');
+let replayer = new Replayer(app, { auth: ['entered'], chat: ['followed'] });
+replayer.replay('auth', 'entered');
 
 React.render(React.createElement(Start, {
   authService: service,
   flux: app,
-  parser
+  parser,
+  replayer
 }), elem);

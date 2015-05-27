@@ -21,7 +21,7 @@ export default class Connector {
   addMessageFromPoll(u) {
     let [s, id, flags, fromId, date, su, text, attach] = u;
     let {link, textParsed} = this.parser.parseLinks(text);
-    if(link) {
+    if(link && !(flags & 2)) {
       this.flux.getActions('chat').followed(link, id);
     }
     let me = this.flux.getStore('auth').state.authedId;

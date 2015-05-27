@@ -7,7 +7,7 @@ export default class Links {
   }
 
   parseLinks(text) {
-    let exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    let exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;\s]*[-A-Z0-9+&@#\/%=~_|\s])/ig;
     let link = false;
     text = this.escapeHtml(text).replace(exp, function(l) {
       link = l;

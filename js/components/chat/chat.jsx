@@ -58,7 +58,10 @@ export default class Chat extends React.Component {
     let actions = this.context.flux.getActions('chat');
     let id = ALLOWED_IDS.filter(el => el !== this.props.user)[0];
     setTimeout(() => {
-      actions.startedChat({userId: id, token: this.props.token});
+      actions.startedChat({userId: id, token: this.props.token})
+        .then(() => {
+          this.props.replayer.replay('chat', 'followed');
+        });
     }, 100);
   }
 

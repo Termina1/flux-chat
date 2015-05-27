@@ -16,10 +16,16 @@ export default class Replayer {
     });
   }
 
-  replay() {
+  replay(store, action) {
+    let actionId = this.flux.getActionIds(store)[action];
     let storage = this.getStorage();
-    this.clearStorge();
-    storage.forEach((m) => this.flux.dispatcher.dispatch(m));
+    let dispatcher = this.flux.dispatcher;
+    this.saveStorage(storage.map((el) => {
+      if(el.actionId === actionId) {
+        dispatcher.dispatch(el);
+      }
+      return el;
+    }));
   }
 
   save(store, message) {
