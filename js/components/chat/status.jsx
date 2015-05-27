@@ -15,7 +15,7 @@ export default class Status extends React.Component {
       'b-chat-container--status_visible': !!chat.status
     });
     return (
-      <div className={cls}>{text}</div>
+      <div className={cls}>&nbsp;{text}</div>
     );
   }
 
