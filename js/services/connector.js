@@ -1,4 +1,4 @@
-import {SERVER} from "../constants";
+import {SERVER, SERVER_RETRY} from "../constants";
 
 export default class Connector {
 
@@ -11,12 +11,19 @@ export default class Connector {
     this.callback = callback;
     this.chatId = chatId;
     this.flux = flux;
+    this.connected = true;
+    return this.startConnection(token);
+  }
+
+  startConnection(token) {
     return fetch(`${SERVER}/poll?token=${token}`)
       .then(r => r.json())
       .then((t) => {
         let {server, key, ts} = t.response;
         let url = `http://${server}?act=a_check&key=${key}&wait=25&mode=2&ts=`;
         this.startLoop(url, ts)
+      }).catch(err => {
+        setTimeout(this.startConnection.bind(this, token), SERVER_RETRY);
       });
   }
 
@@ -75,6 +82,8 @@ export default class Connector {
       .then(r => {
         this.streamFromPoll(r);
         this.startLoop(server, r.ts);
+      }).catch(e => {
+        setTimeout(this.startLoop.bind(this, server, ts), SERVER_RETRY);
       });
   }
 

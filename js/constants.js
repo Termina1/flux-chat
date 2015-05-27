@@ -6,3 +6,4 @@ export const ALLOWED_IDS = [245216, 42444060];
 export const SERVER = SERVER_URL;
 export const MESSAGES_TO_LOAD = 40;
 export const VERSION = "5.33";
+export const SERVER_RETRY = 5000;

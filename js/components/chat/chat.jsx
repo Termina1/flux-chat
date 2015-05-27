@@ -27,7 +27,6 @@ export default class Chat extends React.Component {
   applyPosition() {
     let node = this.refs.window.getDOMNode();
     let height = node.getBoundingClientRect().height;
-    console.log(this.prevScroll);
     if(node.scrollTop + height + HEIGHT_TO_GO_BOTTOM > node.scrollHeight) {
       node.scrollTop = node.scrollHeight;
     } else {
