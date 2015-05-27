@@ -110,4 +110,6 @@ gulp.task('server', function() {
 
 gulp.task('watch-and-serve', ['server', 'watch']);
 
-gulp.task('default', runSeq(['scss', 'js', 'images'], 'index'))
+gulp.task('default', function() {
+  runSeq(['scss', 'js', 'images'], 'index');
+});

@@ -40,6 +40,7 @@ export default class Connector {
 
 
   streamFromPoll({updates}) {
+    console.log(updates);
     let relevant = updates.filter(u => [4, 61, 0, 2].includes(u[0])).forEach(u => {
       switch(u[0]) {
         case 61:
