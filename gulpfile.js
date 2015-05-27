@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var webpack = require('gulp-webpack');
+var gwebpack = require('gulp-webpack');
 var scss = require('gulp-sass');
 var concat = require('gulp-concat');
 var child = require('child_process');
@@ -15,6 +15,7 @@ var assign = require('object-assign');
 var runSeq = require('run-sequence');
 var rename = require('gulp-rename');
 var csso = require('gulp-csso');
+var webpack = require('webpack');
 
 var env = process.env.NODE_ENV || "development";
 
@@ -34,7 +35,7 @@ var index = './index.html';
 gulp.task('js', function() {
     var config = require('./webpack.config.js');
     return gulp.src('./js/main.js')
-        .pipe(webpack(config))
+        .pipe(gwebpack(config, webpack))
         .pipe(onlydev(rename.bind(global, 'main.js')))
         .pipe(gulp.dest(buildDest));
 });
