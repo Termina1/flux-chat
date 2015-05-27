@@ -40,11 +40,21 @@ export default class Connector {
 
 
   streamFromPoll({updates}) {
-    let relevant = updates.filter(u => [4, 61].includes(u[0])).forEach(u => {
+    let relevant = updates.filter(u => [4, 61, 0, 2].includes(u[0])).forEach(u => {
       switch(u[0]) {
         case 61:
           if(u[1] === this.chatId) {
             this.callback('status', u);
+          }
+          break;
+
+        case 0:
+          this.callback('remove', u[1]);
+          break;
+
+        case 2:
+          if(u[2] & 128) {
+            this.callback('remove', u[1])
           }
           break;
 

@@ -87,10 +87,26 @@ export default class ChatStore extends Store {
     this.emit('change');
   }
 
+  removeMessage(id) {
+    for(let chatId in this.state.chats) {
+      for(let i = 0; i < this.state.chats[chatId].messages.length; i++) {
+        if(this.state.chats[chatId].messages[i].id === id) {
+          this.state.chats[chatId].messages.splice(i, 1);
+          return this.emit('change');
+        }
+      }
+    }
+  }
+
   fromPoll(type, u) {
     switch(type) {
       case 'status':
         this.updateChatStatus(u);
+        break;
+
+      case 'remove':
+        console.log(u);
+        this.removeMessage(u);
         break;
 
       case 'message':
