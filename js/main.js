@@ -19,6 +19,9 @@ let app = new App(service, follower, connector, parser);
 let replayer = new Replayer(app, { auth: ['entered'], chat: ['followed'] });
 replayer.replay('auth', 'entered');
 
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent)
+
 React.render(React.createElement(Start, {
   authService: service,
   flux: app,

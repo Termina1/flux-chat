@@ -44,3 +44,10 @@
     visibility: visible;
   }
 }
+
+
+html[data-useragent*='MSIE 10.0'] {
+  .b-chat-container--wrap-inner {
+    height: 100%;
+  }
+}
