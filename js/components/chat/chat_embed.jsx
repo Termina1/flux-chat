@@ -6,7 +6,7 @@ export default class ChatEmbed extends React.Component {
   render() {
     let snippet = this.props.params.snippet;
     return (
-      <div dangerouslySetInnerHTML={{__html: snippet}}>
+      <div className="b-chat-image" dangerouslySetInnerHTML={{__html: snippet}}>
       </div>
     );
   }
